@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Reporter extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -22,7 +22,7 @@ class Welcome extends CI_Controller {
 	{
 		parent::__construct();
 
-			if($this->session->userdata('role')!= '1')
+			if($this->session->userdata('role')!= '2')
 				redirect ('login');
 	}
 	public function index()
@@ -41,22 +41,14 @@ class Welcome extends CI_Controller {
 		 $this->load->view('template/footer');
 	}
 	///////////////////////////////////////////
-	public function laporan_berita()
+	public function upload_berita()
 	{
 		 $this->load->view('template/header');
 		 $this->load->view('template/sidebar');
-		 $this->load->view('laporan_berita');
+		 $this->load->view('upload_berita');
 		 $this->load->view('template/footer');
 	}
 	///////////////////////////////////////////
-	public function pengguna()
-	{
-		$data['query'] = $this->Model_data->pengguna();
-		 $this->load->view('template/header');
-		 $this->load->view('template/sidebar');
-		 $this->load->view('pengguna',$data);
-		 $this->load->view('template/footer');
-	}
-	//////////////////////////////////////////
+	
 
 }

@@ -8,12 +8,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Gister App | aplikasi gis titik kerusakan jalan</title>
+    <title>Manajemen - Berita RRI</title>
 
    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
 
     <!-- Favicon-->
-    <link rel="icon" href="<?= base_url('asset') ?>/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?= base_url('') ?>/favicon.ico" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
@@ -54,7 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 </head>
 
-<body class="theme-blue">
+<body class="theme-pink">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -89,10 +89,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Top Bar -->
     <nav class="navbar">
         <div class="container-fluid">
-            <div class="navbar-header">
+            <div class="navbar-header" style="padding: 5px 7px;">
                  <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="">ADMINBSB - MATERIAL DESIGN</a>
+                <a class="" href=""><img class="" height="100" src="<?= base_url('uploadfile/') ?>logo.png"></a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -221,7 +221,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
                             <li role="separator" class="divider"></li> -->
-                            <li><a href=""><i class="material-icons">input</i>Sign Out</a></li>
+                            <li><a href="<?= base_url('login/logout') ?>"><i class="material-icons">input</i>Log Out</a></li>
                         </ul>
                     </li>
                     <!-- #END# Tasks -->

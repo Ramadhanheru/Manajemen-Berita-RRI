@@ -1,4 +1,4 @@
-<section class="content">
+<section class="content" style="padding: 20px 5px;">
     <div class="container-fluid">
         <div class="block-header">
             <h2>DASHBOARD</h2>

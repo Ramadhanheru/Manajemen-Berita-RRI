@@ -1,10 +1,10 @@
  <section>
         <!-- Left Sidebar -->
-        <aside id="leftsidebar" class="sidebar">
+        <aside id="leftsidebar" class="sidebar" style="top: 110px;">
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="" width="100" height="100" alt="User" />
+                    <img src="<?= base_url('asset/images/') ?>user.png"  alt="User" />
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">heruuu</div>
@@ -15,40 +15,110 @@
             <!-- #User Info -->
             <!-- Menu -->
             <div class="menu">
+                <?php if($this->session->userdata('role') == 1){ ?>
                 <ul class="list"> 
-                    <li class="header">MENU UTAMA</li>
+                    <li class="header">MENU</li>
                      <li >
-                        <a href="">
+                        <a href="<?= base_url('welcome') ?>">
                             <i class="material-icons">home</i>
-                            <span>Beranda</span>
+                            <span>Dashboard</span>
                         </a>
                     </li>
                      <li >
                         <a href="">
                             <i class="material-icons">map</i>
-                            <span>Peta Titik Kerusakan</span>
+                            <span>Berita</span>
                         </a>
                     </li>
+                    <li >
+                        <a href="">
+                            <i class="material-icons">home</i>
+                            <span>Laporan Berita</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="<?= base_url('welcome/pengguna') ?>">
+                            <i class="material-icons">home</i>
+                            <span>Pengguna</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="<?= base_url('login/logout') ?>">
+                            <i class="material-icons">home</i>
+                            <span>Log Out</span>
+                        </a>
+                    </li>
+
                    <!--  <li <?= $this->uri->segment(2) == 'grafik' ? 'class="active"' : '' ?>>
                         <a href="<?= base_url('welcome/grafik'); ?>">
                             <i class="material-icons">timeline</i>
                             <span>Grafik Titik Kerusakan</span>
                         </a>
-                    </li> -->
-                   
-                
-
-                   
+                    </li> -->   
                 </ul>
+            <?php } ?>
+            <?php if($this->session->userdata('role') == 2){ ?>
+                <ul class="list"> 
+                    <li class="header">MENU</li>
+                     <li >
+                        <a href="<?= base_url('welcome') ?>">
+                            <i class="material-icons">home</i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                     <li >
+                        <a href="">
+                            <i class="material-icons">map</i>
+                            <span>Berita</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="">
+                            <i class="material-icons">home</i>
+                            <span>Upload Berita</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="<?= base_url('login/logout') ?>">
+                            <i class="material-icons">home</i>
+                            <span>Log Out</span>
+                        </a>
+                    </li>  
+                </ul>
+            <?php } ?>
+            <?php if($this->session->userdata('role') == 3){ ?>
+                 <ul class="list"> 
+                    <li class="header">MENU</li>
+                     <li >
+                        <a href="<?= base_url('welcome') ?>">
+                            <i class="material-icons">home</i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="">
+                            <i class="material-icons">home</i>
+                            <span>Laporan Berita</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="<?= base_url('login/logout') ?>">
+                            <i class="material-icons">home</i>
+                            <span>Log Out</span>
+                        </a>
+                    </li>  
+                </ul>
+            <?php } ?>
+
             </div>
             <!-- #Menu -->
             <!-- Footer -->
-            <div class="legal">
+            <div class="legal" style="padding: 50px 15px;">
                 <div class="copyright">
-                    &copy; <?= date('Y'); ?> <a href="">Gister Application</a>.
+                    &copy; <?= date('Y'); ?> <a href="">Manajemen-Berita RRI Application</a>.
                 </div>
                 <div class="version">
-                    <b>Version: </b> 1.0.5
+                    <b>Version: </b> 1.0
                 </div>
             </div>
             <!-- #Footer -->
