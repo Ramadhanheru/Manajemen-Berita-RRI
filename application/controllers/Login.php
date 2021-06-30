@@ -88,33 +88,19 @@ class Login extends CI_Controller {
 			}
 	}
 
-	public function e_profile(){
+	public function profile(){
 		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
 
-		$this->load->view('template/header',$data);
-		$this->load->view('profile');
-		$this->load->view('template/footer');
+		 $this->load->view('template/header');
+		 $this->load->view('template/sidebar');
+		 $this->load->view('profile',$data);
+		 $this->load->view('template/footer');
 
 	}
-	public function editprofile($id){
-
-		$user = $this->Model_data->ambil_id_profile($id);
-		$data['query1'] = $this->Model_data->ambil_id_profile($id);
-		$cek_username = $_POST['username'];
-			if($cek_username){
-				$this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[pengguna.username]', [
-            'is_unique' => 'This username has already registered!']);
-			}
-		$this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[3]', ['min_length' => 'Kata sandi terlalu pendek!']);
-
-		if($this->form_validation->run()==false){
-			$this->e_profile();
-
-		}else{
-
-			
-
-			$cekgambar1 = $_FILES['foto']['name'];
+	public function editprofile(){
+		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
+		$id = $this->input->post('id_user');
+		$cekgambar1 = $_FILES['foto']['name'];
 
 			if($cekgambar1){
 
@@ -126,35 +112,86 @@ class Login extends CI_Controller {
         $this->upload->initialize($config);
         if ($this->upload->do_upload('foto')) {
 
-        	$old_image = $data['query1']['foto'];
-        	if($old_image != 'avatar.png'){
+        	$old_image = $data['user']['foto'];
+        	if($old_image != 'user.png'){
         		unlink(FCPATH . 'uploadfile/' . $old_image);
         	}
 
             $new_image =  $this->upload->data('file_name');
             $this->db->set('foto',$new_image);
-            $this->db->where('id_pengguna', $id);
-			$this->db->update('pengguna');
+            $this->db->where('id_user', $id);
+			$this->db->update('users');
+			$this->session->set_flashdata('message','<div class ="alert alert-success" roles="alert"><h6> Data berhasil diUpdate ! 
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+				$user = $this->Model_data->ambil_id_profile($id);
+			redirect('login/profile');
+
         } else{
-            return "avatar.png";
+            return "user.png";
         }
 			}
 
-		$cek_username = $_POST['username'];
-			if($cek_username){
-				$this->db->set('username', $this->input->post('username'));
-			}
+		$data = [
+                'nama' => $this->input->post('nama', true),
+                'alamat' => $this->input->post('alamat', true),
+                'no_hp' => $this->input->post('no_hp', true),
+                'email' => $this->input->post('email', true)
+            ];
+
+				$this->db->set($data);
+				$this->db->where('id_user', $id);
+				$this->db->update('users');
+				$this->session->set_flashdata('message','<div class ="alert alert-success" roles="alert"><h6> Data berhasil diUpdate ! 
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+				$user = $this->Model_data->ambil_id_profile($id);
+				$this->session->set_userdata(array('user'=>$user['username'],'password'=>$user['password'],'role' => $user['role'],'id_user'=>$user['id_user']));
+			redirect('login/profile');
+	}
+
+	public function editPassword(){
+
+		$id = $this->input->post('id_user');
 		
-		$this->db->set('password', password_hash($this->input->post('password'), PASSWORD_DEFAULT));
-		$this->db->where('id_pengguna', $id);
-		$this->db->update('pengguna');
-		$this->session->set_flashdata('message','<div class ="alert alert-success" roles="alert"><h6> Data berhasil diubah ! 
+		$this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[3]|matches[password2]', [
+            'matches' => 'Kata sandi tidak cocok!',
+            'min_length' => 'Kata sandi terlalu pendek!'
+        ]);
+        $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password]');
+
+		if($this->form_validation->run()==false){
+			$this->profile();
+
+		}else{
+
+		$this->db->set('password', password_hash($this->input->post('password2'), PASSWORD_DEFAULT));
+		$this->db->where('id_user', $id);
+		$this->db->update('users');
+		$this->session->set_flashdata('message','<div class ="alert alert-success" roles="alert"><h6> Data berhasil diupdate ! 
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
 		$user = $this->Model_data->ambil_id_profile($id);
-		$this->session->set_userdata(array('user'=>$user['username'],'password'=>$user['password'],'role' => $user['role'],'id_pengguna'=>$user['id_pengguna']));
-			$this->e_profile();
+		$this->session->set_userdata(array('user'=>$user['username'],'password'=>$user['password'],'role' => $user['role'],'id_user'=>$user['id_user']));
+			redirect('login/profile');
 		}
 
+	}
+	public function editUsername(){
+		$id = $this->input->post('id_user');
+		$this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[users.username]', [
+            'is_unique' => 'This username has already registered!']);
+		
+		if($this->form_validation->run()==false){
+			$this->profile();
+
+		}else{
+		$this->db->set('username', $this->input->post('username'));
+		$this->db->where('id_user', $id);
+		$this->db->update('users');
+		$this->session->set_flashdata('message','<div class ="alert alert-success" roles="alert"><h6> Data berhasil diupdate ! 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+		$user = $this->Model_data->ambil_id_profile($id);
+		$this->session->set_userdata(array('user'=>$user['username'],'password'=>$user['password'],'role' => $user['role'],'id_user'=>$user['id_user']));
+			redirect('login/profile');
+			}
 	}
 
 

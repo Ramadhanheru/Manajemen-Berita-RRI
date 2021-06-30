@@ -215,7 +215,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <i class="material-icons">more_vert</i>
                         </a>
                          <ul class="dropdown-menu pull-right">
-                            <li><a href=""><i class="material-icons">person</i>Profile</a></li>
+                            <li><a href="<?= base_url('login/profile') ?>"><i class="material-icons">person</i>Profile</a></li>
                             <li role="separator" class="divider"></li>
                           <!--   <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
