@@ -40,7 +40,7 @@ class Login extends CI_Controller {
 					if (password_verify($password, $user['password'])) {
                    
                    $this->session->set_userdata(array('user'=>$userr,'password'=>$password,'role' => $user['role'], 'id_user' => $user['id_user']));
-					$this->session->set_flashdata('message','<div class ="alert alert-success" roles="alert"><h6>Welcome '.$userr.' ! <span>Anda Masuk Sebagai Editor.</span></h6> </div>');
+					$this->session->set_flashdata('message','<div class ="alert alert-success" roles="alert">Welcome '.$userr.' ! <span>Anda Masuk Sebagai Editor.</span></div>');
 					redirect('Welcome');
 
                 } else {
@@ -92,7 +92,7 @@ class Login extends CI_Controller {
 		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
 
 		 $this->load->view('template/header');
-		 $this->load->view('template/sidebar');
+		 $this->load->view('template/sidebar',$data);
 		 $this->load->view('profile',$data);
 		 $this->load->view('template/footer');
 

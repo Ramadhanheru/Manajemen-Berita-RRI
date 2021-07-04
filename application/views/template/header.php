@@ -27,6 +27,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <!-- Animation Css -->
     <link href="<?= base_url('asset') ?>/plugins/animate-css/animate.css" rel="stylesheet" />
+    
+    <!-- Bootstrap Material Datetime Picker Css -->
+    <link href="<?= base_url('asset') ?>/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+
+    <!-- Bootstrap DatePicker Css -->
+    <link href="<?= base_url('asset') ?>/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
 
     <!-- Custom Css -->
     <link href="<?= base_url('asset') ?>/css/style.css" rel="stylesheet">
@@ -50,6 +56,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Sweetalert Css -->
     <link href="<?= base_url('asset') ?>/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
 <!-- map -->
+
+
 
 
 </head>

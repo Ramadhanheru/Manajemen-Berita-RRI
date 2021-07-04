@@ -4,11 +4,11 @@
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="<?= base_url('asset/images/') ?>user.png"  alt="User" />
+                    <img src="<?= base_url('uploadfile/').$user['foto'] ?>" width="70" height="70" alt="User" />
                 </div>
-                <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">heruuu</div>
-                    <div class="email">ramadhanheru</div>
+                <div class="info-container"style="margin-top: -20px;">
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $user['nama'] ?></div>
+                    <div class="email"><?= $user['jabatan'] ?></div>
                     
                 </div>
             </div>
@@ -18,33 +18,35 @@
                 <?php if($this->session->userdata('role') == 1){ ?>
                 <ul class="list"> 
                     <li class="header">MENU</li>
-                     <li >
+                     <li <?= $this->uri->segment(2) == '' ||
+                            $this->uri->segment(2) == 'profile' ? 'class="active "' : '' ?>>
                         <a href="<?= base_url('welcome') ?>">
                             <i class="material-icons">home</i>
                             <span>Dashboard</span>
                         </a>
                     </li>
-                     <li >
-                        <a href="">
-                            <i class="material-icons">map</i>
-                            <span>Berita</span>
+                     <li <?= $this->uri->segment(2) == 'warta_berita' ? 'class="active "' : '' ?>>
+                        <a href="<?= base_url('welcome/warta_berita') ?>">
+                            <i class="material-icons">wifi_tethering</i>
+                            <span>Warta Berita</span>
                         </a>
                     </li>
-                    <li >
-                        <a href="">
-                            <i class="material-icons">home</i>
+                    <li <?= $this->uri->segment(2) == 'laporan_berita' ||
+                            $this->uri->segment(2) == 'update_laporan_berita' ? 'class="active "' : '' ?>>
+                        <a href="<?= base_url('welcome/laporan_berita') ?>">
+                            <i class="material-icons">archive</i>
                             <span>Laporan Berita</span>
                         </a>
                     </li>
-                    <li >
+                    <li <?= $this->uri->segment(2) == 'pengguna' ? 'class="active "' : '' ?>>
                         <a href="<?= base_url('welcome/pengguna') ?>">
-                            <i class="material-icons">home</i>
+                            <i class="material-icons">person_pin</i>
                             <span>Pengguna</span>
                         </a>
                     </li>
                     <li >
                         <a href="<?= base_url('login/logout') ?>">
-                            <i class="material-icons">home</i>
+                            <i class="material-icons">input</i>
                             <span>Log Out</span>
                         </a>
                     </li>
@@ -60,27 +62,28 @@
             <?php if($this->session->userdata('role') == 2){ ?>
                 <ul class="list"> 
                     <li class="header">MENU</li>
-                     <li >
-                        <a href="<?= base_url('welcome') ?>">
+                     <li <?= $this->uri->segment(2) == '' ||
+                            $this->uri->segment(2) == 'profile' ? 'class="active "' : '' ?>>
+                        <a href="<?= base_url('reporter') ?>">
                             <i class="material-icons">home</i>
                             <span>Dashboard</span>
                         </a>
                     </li>
-                     <li >
-                        <a href="">
-                            <i class="material-icons">map</i>
-                            <span>Berita</span>
+                     <li <?= $this->uri->segment(2) == 'laporan_berita' ? 'class="active "' : '' ?>>
+                        <a href="<?= base_url('reporter/laporan_berita') ?>">
+                            <i class="material-icons">collections_bookmark</i>
+                            <span>Laporan Berita</span>
                         </a>
                     </li>
-                    <li >
-                        <a href="">
-                            <i class="material-icons">home</i>
-                            <span>Upload Berita</span>
+                    <li <?= $this->uri->segment(2) == 'upload_laporan' ? 'class="active "' : '' ?>>
+                        <a href="<?= base_url('reporter/upload_laporan') ?>">
+                            <i class="material-icons">file_upload</i>
+                            <span>Upload Laporan Berita</span>
                         </a>
                     </li>
                     <li >
                         <a href="<?= base_url('login/logout') ?>">
-                            <i class="material-icons">home</i>
+                            <i class="material-icons">input</i>
                             <span>Log Out</span>
                         </a>
                     </li>  

@@ -27,33 +27,92 @@ class Welcome extends CI_Controller {
 	}
 	public function index()
 	{
+		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
 		 $this->load->view('template/header');
-		 $this->load->view('template/sidebar');
+		 $this->load->view('template/sidebar',$data);
 		 $this->load->view('blank');
 		 $this->load->view('template/footer');
 	}
 	///////////////////////////////////////////
-	public function berita()
+	public function warta_berita()
 	{
+		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
+		$data['query'] = $this->Model_data->warta_berita();
 		 $this->load->view('template/header');
-		 $this->load->view('template/sidebar');
-		 $this->load->view('berita');
+		 $this->load->view('template/sidebar',$data);
+		 $this->load->view('warta_berita',$data);
 		 $this->load->view('template/footer');
 	}
 	///////////////////////////////////////////
 	public function laporan_berita()
 	{
+		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
+		 $data['query'] =  $this->Model_data->all_laporan_berita();
 		 $this->load->view('template/header');
-		 $this->load->view('template/sidebar');
-		 $this->load->view('laporan_berita');
+		 $this->load->view('template/sidebar',$data);
+		 $this->load->view('laporan_berita',$data);
 		 $this->load->view('template/footer');
 	}
+	public function update_laporan_berita($id)
+	{
+		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
+		 $data['query'] =  $this->Model_data->all_laporan_berita_by_id($id);
+		 $this->form_validation->set_rules('ringkasan_laporan','ringkasan_laporan','trim|required');
+
+		if($this->form_validation->run()==false){
+			 $this->load->view('template/header');
+			 $this->load->view('template/sidebar',$data);
+			 $this->load->view('update_laporan_berita',$data);
+			 $this->load->view('template/footer');
+		}else{
+
+			$this->db->set('status', 1);
+			$this->db->set('ringkasan_laporan', $this->input->post('ringkasan_laporan'));
+			$this->db->where('id_laporan_berita', $id);
+			$this->db->update('laporan_berita');
+			$this->session->set_flashdata('message','<div class ="alert alert-success" roles="alert"><h6> Data berhasil diUpdate ! 
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+				redirect('welcome/laporan_berita');
+		}
+		 
+	}
+	public function edit_laporan_berita($id)
+	{
+		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
+		 $data = [
+                'berita' => $this->input->post('gender', true),
+                'tanggal' => $this->input->post('tanggal', true)
+            ];
+
+				$this->db->set($data);
+				$this->db->where('id_laporan_berita', $id);
+				$this->db->update('laporan_berita');
+				$this->session->set_flashdata('message','<div class ="alert alert-success" roles="alert"><h6> Data berhasil diUpdate ! 
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+				redirect('welcome/laporan_berita');
+		
+		 
+	}
+	public function hapus_laporan_berita($id){
+		$data = $this->Model_data->hapus_laporan_berita($id);
+			if (!$data) {
+				$this->session->set_flashdata('message','<div class ="alert alert-success " roles="alert"><h6> Data berhasil dihapus ! 
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+				redirect('welcome/laporan_berita');
+			} else {
+				$this->session->set_flashdata('message','<div class ="alert alert-danger  " roles="alert"><h6> Data gagal dihapus ! 
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+				redirect('welcome/laporan_berita');
+			}
+	}
+
 	///////////////////////////////////////////
 	public function pengguna()
 	{
+		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
 		$data['query'] = $this->Model_data->pengguna();
 		 $this->load->view('template/header');
-		 $this->load->view('template/sidebar');
+		 $this->load->view('template/sidebar',$data);
 		 $this->load->view('pengguna',$data);
 		 $this->load->view('template/footer');
 	}
