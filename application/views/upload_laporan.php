@@ -13,6 +13,7 @@
                         </h2>
                     </div>
                     <div  class="body">
+                        <?= $this->session->flashdata('message') ?>
                         <form action="<?= base_url('reporter/tambah_laporan_berita') ?>" id="form_validation" method="POST" class="form-horizontal" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="nama" class="col-sm-2 control-label">Nama Reporter</label>
@@ -20,6 +21,7 @@
                                     <div class="form-line">
                                         <input type="hidden" class="form-control" id="id_user" name="id_user" placeholder="id_user Pengguna" value="<?= $user['id_user'] ?>" required>
                                         <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Pengguna" value="<?= $user['nama'] ?>" required readonly>
+                                        <?= form_error('nama','<small class="text-danger pl-3 ">','</small>');?>
                                     </div>
                                 </div>
                             </div>
@@ -27,7 +29,7 @@
                                 <label for="berita" class="col-sm-2 control-label">Berita</label>
                                 <div class="col-sm-10">
                                     <div class="form-line">
-                                        <input type="radio" value="Warta Daerah" name="gender" id="male" class="with-gap">
+                                        <input type="radio" checked="" value="Warta Daerah" name="gender" id="male" class="with-gap">
                                         <label for="male">Warta Daerah</label>
                                         <input type="radio" value="Warta Olahraga" name="gender" id="female" class="with-gap">
                                         <label for="female" class="m-l-20">Warta Olahraga</label>
@@ -43,10 +45,19 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="foto" class="col-sm-2 control-label">Laporan Berita</label>
+                                <label for="foto" class="col-sm-2 control-label">Text Laporan Berita</label>
                                 <div class="col-sm-10">
                                     <div class="form-line">
-                                        <input type="file" class="form-control" id="file_laporan" name="file_laporan" required="">
+                                        <input type="file" class="form-control" id="text_laporan" name="text_laporan" >
+                                    </div>
+                                    <p class=" font-italic col-red">*file berupa word atau pdf</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="foto" class="col-sm-2 control-label">File Laporan Berita</label>
+                                <div class="col-sm-10">
+                                    <div class="form-line">
+                                        <input type="file" class="form-control" id="file_laporan" name="file_laporan" >
                                     </div>
                                     <p class=" font-italic col-red">*file berupa .mp3</p>
                                 </div>

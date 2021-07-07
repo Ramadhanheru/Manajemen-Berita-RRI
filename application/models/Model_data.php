@@ -17,6 +17,7 @@ class Model_data extends CI_Model
 	}
 	public function pengguna(){
 		$this->db->not_like('id_user',1);
+		$this->db->not_like('id_user',2);
 		return $this->db->get('users');
 	}
 	public function tambah_pengguna($data){
@@ -34,10 +35,24 @@ class Model_data extends CI_Model
 		$this->db->where('laporan_berita.id_user', $id);
 		return $this->db->get();
 	}
+	public function cek_laporan_berita($id){
+		$this->db->select('*, users.nama');
+		$this->db->from('users');
+		$this->db->join('laporan_berita','laporan_berita.id_user = users.id_user');
+		$this->db->where('laporan_berita.id_user', $id);
+		return $this->db->get()->row_array();
+	}
 	public function all_laporan_berita(){
 		$this->db->select('*, users.nama');
 		$this->db->from('users');
 		$this->db->join('laporan_berita','laporan_berita.id_user = users.id_user');
+		return $this->db->get();
+	}
+	public function all_laporan_berita1(){
+		$this->db->select('*, users.nama');
+		$this->db->from('users');
+		$this->db->join('laporan_berita','laporan_berita.id_user = users.id_user');
+		$this->db->where('laporan_berita.status', 1);
 		return $this->db->get();
 	}
 	public function all_laporan_berita_by_id($id){
@@ -57,7 +72,7 @@ class Model_data extends CI_Model
 	//////////////////////////////////////////////////
 	public function warta_berita(){
 		$this->db->select('*, laporan_berita.id_user, laporan_berita.berita, laporan_berita.file_laporan, laporan_berita.ringkasan_laporan
-							,laporan_berita.status, users.nama');
+							, users.nama,warta_berita.status as status');
 		$this->db->from('warta_berita');
 		$this->db->join('laporan_berita','laporan_berita.id_laporan_berita = warta_berita.id_laporan_berita');
 		$this->db->join('users','users.id_user = laporan_berita.id_user');
@@ -65,6 +80,42 @@ class Model_data extends CI_Model
 
 		return $this->db->get();
 	}
+	public function warta_berita0(){
+		$this->db->select('*, laporan_berita.id_user, laporan_berita.berita, laporan_berita.file_laporan, laporan_berita.ringkasan_laporan
+							, users.nama,warta_berita.status as status');
+		$this->db->from('warta_berita');
+		$this->db->join('laporan_berita','laporan_berita.id_laporan_berita = warta_berita.id_laporan_berita');
+		$this->db->join('users','users.id_user = laporan_berita.id_user');
+		$this->db->where('warta_berita.status',0);
+
+		return $this->db->get();
+	}
+	public function warta_berita1(){
+		$this->db->select('*, laporan_berita.id_user, laporan_berita.berita, laporan_berita.file_laporan, laporan_berita.ringkasan_laporan
+							, users.nama,warta_berita.status as status');
+		$this->db->from('warta_berita');
+		$this->db->join('laporan_berita','laporan_berita.id_laporan_berita = warta_berita.id_laporan_berita');
+		$this->db->join('users','users.id_user = laporan_berita.id_user');
+		$this->db->where('warta_berita.status',1);
 
 
+		return $this->db->get();
+	}
+	public function cek_warta_berita($id){
+		$this->db->select('*, laporan_berita.id_user, laporan_berita.berita, laporan_berita.file_laporan, laporan_berita.ringkasan_laporan
+							, users.nama,warta_berita.status as status');
+		$this->db->from('warta_berita');
+		$this->db->join('laporan_berita','laporan_berita.id_laporan_berita = warta_berita.id_laporan_berita');
+		$this->db->join('users','users.id_user = laporan_berita.id_user');
+		$this->db->where('warta_berita.id_laporan_berita',$id);
+		return $this->db->get()->row_array();
+	}
+	public function tambah_warta_berita($data){
+		$this->db->insert('warta_berita',$data);
+	}
+
+	public function hapus_warta_berita($id){
+		$this->db->where('id_warta_berita', $id);
+		$query = $this->db->delete('warta_berita');
+	}
 }

@@ -38,10 +38,64 @@ class Welcome extends CI_Controller {
 	{
 		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
 		$data['query'] = $this->Model_data->warta_berita();
+		 $data['query1'] =  $this->Model_data->all_laporan_berita1();
 		 $this->load->view('template/header');
 		 $this->load->view('template/sidebar',$data);
 		 $this->load->view('warta_berita',$data);
 		 $this->load->view('template/footer');
+	}
+	public function tambah_warta_berita()
+	{
+		$data = [
+			 	'desk_editor' => $this->input->post('desk_editor', true),
+                'hari' => $this->input->post('hari', true),
+                'tanggal' => $this->input->post('tanggal', true),
+                'pukul' => $this->input->post('pukul', true),
+                'id_laporan_berita' => $this->input->post('id_laporan_berita', true)
+            ];
+				$proses = $this->Model_data->tambah_warta_berita($data);
+				$this->session->set_flashdata('message','<div class ="alert alert-success" roles="alert"><h6> Data berhasil ditambah ! 
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+				redirect('welcome/warta_berita');
+		
+	}
+	public function lihat_laporan_berita($id)
+	{
+		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
+		 $data['query'] =  $this->Model_data->all_laporan_berita_by_id($id);
+			 $this->load->view('template/header');
+			 $this->load->view('template/sidebar',$data);
+			 $this->load->view('lihat_laporan_berita',$data);
+			 $this->load->view('template/footer');
+		
+		 
+	}
+	public function edit_warta_berita($id){
+		$data = [
+			 	'desk_editor' => $this->input->post('desk_editor', true),
+                'hari' => $this->input->post('hari', true),
+                'tanggal' => $this->input->post('tanggal', true),
+                'pukul' => $this->input->post('pukul', true)
+            ];
+            $this->db->set($data);
+				$this->db->where('id_warta_berita', $id);
+				$this->db->update('warta_berita');
+				$this->session->set_flashdata('message','<div class ="alert alert-success" roles="alert"><h6> Data berhasil diUpdate ! 
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+				redirect('welcome/warta_berita');
+	}
+	public function hapus_warta_berita($id){
+
+		$data = $this->Model_data->hapus_warta_berita($id);
+			if (!$data) {
+				$this->session->set_flashdata('message','<div class ="alert alert-success " roles="alert"><h6> Data berhasil dihapus ! 
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+				redirect('welcome/warta_berita');
+			} else {
+				$this->session->set_flashdata('message','<div class ="alert alert-danger  " roles="alert"><h6> Data gagal dihapus ! 
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+				redirect('welcome/warta_berita');
+			}
 	}
 	///////////////////////////////////////////
 	public function laporan_berita()
@@ -80,7 +134,7 @@ class Welcome extends CI_Controller {
 	{
 		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
 		 $data = [
-                'berita' => $this->input->post('gender', true),
+                'berita' => $this->input->post('berita', true),
                 'tanggal' => $this->input->post('tanggal', true)
             ];
 
@@ -94,16 +148,28 @@ class Welcome extends CI_Controller {
 		 
 	}
 	public function hapus_laporan_berita($id){
-		$data = $this->Model_data->hapus_laporan_berita($id);
-			if (!$data) {
-				$this->session->set_flashdata('message','<div class ="alert alert-success " roles="alert"><h6> Data berhasil dihapus ! 
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
-				redirect('welcome/laporan_berita');
+
+		$cekdata = $this->Model_data->cek_warta_berita($id);
+			if (!$cekdata) {
+					$data = $this->Model_data->hapus_laporan_berita($id);
+				if (!$data) {
+					$this->session->set_flashdata('message','<div class ="alert alert-success " roles="alert"><h6> Data berhasil dihapus ! 
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+					redirect('welcome/laporan_berita');
+				} else {
+					$this->session->set_flashdata('message','<div class ="alert alert-danger  " roles="alert"><h6> Data gagal dihapus ! 
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+					redirect('welcome/laporan_berita');
+				}
+		
 			} else {
-				$this->session->set_flashdata('message','<div class ="alert alert-danger  " roles="alert"><h6> Data gagal dihapus ! 
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
-				redirect('welcome/laporan_berita');
+				$this->session->set_flashdata('message','<div class ="alert alert-danger  " roles="alert"><h6> Data gagal dihapus ! Karena data sedang digunakan.
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+					redirect('welcome/laporan_berita');
 			}
+
+		
+			
 	}
 
 	///////////////////////////////////////////
@@ -122,6 +188,12 @@ class Welcome extends CI_Controller {
 		$this->db->update('users');
 		redirect('welcome/pengguna');
 	}
+	public function role_aktif_editor($id){
+		$this->db->set('role',1);
+		$this->db->where('id_user', $id);
+		$this->db->update('users');
+		redirect('welcome/pengguna');
+	}
 	public function role_tidak_aktif($id){
 		$this->db->set('role',0);
 		$this->db->where('id_user', $id);
@@ -130,6 +202,7 @@ class Welcome extends CI_Controller {
 	}
 	public function tambah_pengguna()
 	{
+
 		$this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[users.username]', ['is_unique' => 'This username has already registered!']);
 		$this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[3]', ['min_length' => 'Kata sandi terlalu pendek!']);
 		$cekgambar1 = $_FILES['foto']['name'];
@@ -153,7 +226,6 @@ class Welcome extends CI_Controller {
                 'email' => $this->input->post('email', true),
                 'foto' => $this->uploadfoto()
             ];
-
 				$proses = $this->Model_data->tambah_pengguna($data);
 				$this->session->set_flashdata('message','<div class ="alert alert-success" roles="alert"><h6> Data berhasil ditambah ! 
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
@@ -194,7 +266,8 @@ class Welcome extends CI_Controller {
                 'jabatan' => $this->input->post('jabatan', true),
                 'alamat' => $this->input->post('alamat', true),
                 'no_hp' => $this->input->post('no_hp', true),
-                'email' => $this->input->post('email', true)
+                'email' => $this->input->post('email', true),
+                'role' => 0
             ];
 
 				$this->db->set($data);
@@ -204,9 +277,12 @@ class Welcome extends CI_Controller {
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
 				redirect('welcome/pengguna');
 
+				
 	}
 	public function hapus_pengguna($id){
-		$data = $this->Model_data->hapus_pengguna($id);
+		$cekdata = $this->Model_data->cek_laporan_berita($id);
+		if (!$cekdata) {
+			$data = $this->Model_data->hapus_pengguna($id);
 			if (!$data) {
 				$this->session->set_flashdata('message','<div class ="alert alert-success " roles="alert"><h6> Data berhasil dihapus ! 
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
@@ -216,6 +292,13 @@ class Welcome extends CI_Controller {
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
 				redirect('welcome/pengguna');
 			}
+		} else {
+			$this->session->set_flashdata('message','<div class ="alert alert-danger  " roles="alert"><h6> Data gagal dihapus ! Karena data sedang digunakan. 
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button> </h6></div>');
+				redirect('welcome/pengguna');
+		}
+		
+		
 	}
 	//////////////////////////////////////////
 

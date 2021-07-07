@@ -92,16 +92,17 @@
             <?php if($this->session->userdata('role') == 3){ ?>
                  <ul class="list"> 
                     <li class="header">MENU</li>
-                     <li >
-                        <a href="<?= base_url('welcome') ?>">
+                     <li <?= $this->uri->segment(2) == '' ||
+                            $this->uri->segment(2) == 'profile' ? 'class="active "' : '' ?>>
+                        <a href="<?= base_url('pro1') ?>">
                             <i class="material-icons">home</i>
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li >
-                        <a href="">
-                            <i class="material-icons">home</i>
-                            <span>Laporan Berita</span>
+                     <li <?= $this->uri->segment(2) == 'warta_berita' ? 'class="active "' : '' ?>>
+                        <a href="<?= base_url('pro1/warta_berita') ?>">
+                            <i class="material-icons">wifi_tethering</i>
+                            <span>Warta Berita</span>
                         </a>
                     </li>
                     <li >

@@ -27,17 +27,21 @@ class Pro1 extends CI_Controller {
 	}
 	public function index()
 	{
+		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
 		 $this->load->view('template/header');
-		 $this->load->view('template/sidebar');
-		 $this->load->view('blank');
+		 $this->load->view('template/sidebar',$data);
+		 $this->load->view('blank',$data);
 		 $this->load->view('template/footer');
 	}
 	///////////////////////////////////////////
-	public function laporan_berita()
+	public function warta_berita()
 	{
+		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
+		$data['query'] = $this->Model_data->warta_berita0();
+		$data['query1'] = $this->Model_data->warta_berita1();
 		 $this->load->view('template/header');
-		 $this->load->view('template/sidebar');
-		 $this->load->view('laporan_berita');
+		 $this->load->view('template/sidebar',$data);
+		 $this->load->view('warta_berita',$data);
 		 $this->load->view('template/footer');
 	}
 	

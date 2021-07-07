@@ -3,6 +3,7 @@
         <div class="block-header">
             <h2>LAPORAN BERITA</h2>
         </div>
+        <?= $this->session->flashdata('message'); ?>
         
         <!-- Exportable Table -->
         <div class="row clearfix">
@@ -23,6 +24,7 @@
                                         <th>Tanggal</th>
                                         <th>Nama</th>
                                         <th>Berita</th>
+                                        <th>Text laporan</th>
                                         <th>File laporan Berita</th>
                                         <th>Ringkasan Berita</th>
                                         <th>Status</th>
@@ -35,6 +37,7 @@
                                     <th>Tanggal</th>
                                     <th>Nama</th>
                                     <th>Berita</th>
+                                    <th>Text laporan</th>
                                     <th>File laporan Berita</th>
                                     <th>Ringkasan Berita</th>
                                     <th>Status</th>
@@ -52,6 +55,7 @@
                                         <td><?= $q->tanggal ?></td>
                                         <td><?= $q->nama ?></td>
                                         <td><?= $q->berita ?></td>
+                                        <td><a href="<?= base_url('uploadfile/').$q->text_laporan ?>" target="_blank"><?= $q->text_laporan ?></a></td>
                                         <td><audio controls>
                                             <source src="<?= base_url('uploadfile/').$q->file_laporan ?>" type="audio/mpeg">
                                             Browsermu tidak mendukung tag audio, upgrade donk!
@@ -73,7 +77,8 @@
                             </table>
                         </div>
                         <?php } ?>
-                        <?php if($this->session->userdata('role') == 1){ ?>
+
+                         <?php if($this->session->userdata('role') == 1){ ?>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                 <thead>
@@ -82,10 +87,12 @@
                                         <th>Tanggal laporan masuk</th>
                                         <th>Reporter</th>
                                         <th>Berita</th>
+                                        <th>Text laporan</th>
                                         <th>File laporan Berita</th>
                                         <th>Ringkasan Berita</th>
+                                        <?php if($this->session->userdata('id_user') == 1){ ?>
                                         <th>Action</th>
-                                        
+                                        <?php } ?>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -94,9 +101,12 @@
                                     <th>Tanggal laporan masuk</th>
                                     <th>Reporter</th>
                                     <th>Berita</th>
+                                    <th>Text laporan</th>
                                     <th>File laporan Berita</th>
                                     <th>Ringkasan Berita</th>
-                                    <th>Action</th>
+                                     <?php if($this->session->userdata('id_user') == 1){ ?>
+                                        <th>Action</th>
+                                        <?php } ?>
                                     
                                 </tr>
                                 </tfoot>
@@ -111,6 +121,7 @@
                                         <td><?= $q->tanggal ?></td>
                                         <td><?= $q->nama ?></td>
                                         <td><?= $q->berita ?></td>
+                                        <td><a href="<?= base_url('uploadfile/').$q->text_laporan ?>" target="_blank"><?= $q->text_laporan ?></a></td>
                                         <td><audio controls>
                                             <source src="<?= base_url('uploadfile/').$q->file_laporan ?>" type="audio/mpeg">
                                             Browsermu tidak mendukung tag audio, upgrade donk!
@@ -122,13 +133,14 @@
                                             <a href="<?= base_url('welcome/update_laporan_berita/').$q->id_laporan_berita?>"><p class="col-teal">Lihat Ringkasan Berita</p></a>
                                             <?php } ?>
                                         </td>
-                                        
+                                        <?php if($this->session->userdata('id_user') == 1){ ?>
                                         <td><a class="btn bg-lime btn-circle waves-effect waves-circle waves-float"
                                             href=""data-toggle="modal" data-target="#editModal-<?=$q->id_laporan_berita?>"><i class="material-icons " >create</i>
                                         </a>
                                         <a  class="btn bg-red btn-circle waves-effect waves-circle waves-float  tombol-hapus"  href="<?= base_url('welcome/hapus_laporan_berita/').$q->id_laporan_berita?> "><i class="material-icons">delete_forever</i>
                                         </a>
                                     </td>
+                                <?php } ?>
                                 </tr>
                                 <div class="modal fade" id="editModal-<?=$q->id_laporan_berita?>" tabindex="-1" role="dialog">
                                     <div class="modal-dialog modal-lg" role="document">
@@ -137,7 +149,7 @@
                                                 <h4 class="modal-title" id="largeModalLabel">Edit laporan berita</h4>
                                             </div>
                                             <div class="modal-body">
-                                                <form id="form_validation" action="<?= base_url('welcome/edit_laporan_berita/').$q->id_laporan_berita?>" method="POST" >
+                                                <form id="" action="<?= base_url('welcome/edit_laporan_berita/').$q->id_laporan_berita?>" method="POST" >
                                                     <div class="form-group">
                                                         <label for="nama" class="col-sm-2 control-label">Nama Reporter</label>
                                                         <div class="col-sm-10">
@@ -150,10 +162,7 @@
                                                         <label for="berita" class="col-sm-2 control-label">Berita</label>
                                                         <div class="col-sm-10">
                                                             <div class="form-line">
-                                                                <input type="radio" value="Warta Daerah" name="gender" id="male" class="with-gap"  <?= $q->berita == 'Warta Daerah' ? 'checked=""' : '' ?>>
-                                                                <label for="male">Warta Daerah</label>
-                                                                <input type="radio" value="Warta Olahraga" name="gender" id="female" class="with-gap" <?= $q->berita == 'Warta Olahraga' ? 'checked=""' : '' ?>>
-                                                                <label for="female" class="m-l-20">Warta Olahraga</label>
+                                                                <input type="text" class="form-control" id="berita" name="berita" placeholder="berita Pengguna" value="<?= $q->berita ?>" required >
                                                             </div>
                                                         </div>
                                                     </div>
@@ -183,7 +192,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <?php } ?>
+                <?php } ?>
                 </div>
             </div>
         </div>

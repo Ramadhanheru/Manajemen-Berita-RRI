@@ -62,8 +62,11 @@
                                                     </div>
                                                     <div class="form-group form-float">
                                                         <div class="form-line">
-                                                            <input type="text" class="form-control" name="jabatan" required>
-                                                            <label class="form-label">Jabatan</label>
+                                                             <select name="jabatan" class="form-control show-tick">
+                                                                <option>-- Please select Jabatan --</option>
+                                                                <option value="Reporter">Reporter</option>
+                                                                <option value="Editor">Editor</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="form-group form-float">
@@ -140,11 +143,19 @@
                                         <td><?= $q->jabatan ?></td>
                                         <td><?= $q->no_hp ?></td>
                                         <td><?= $q->email ?></td>
-                                        <td><?php if ($q->role == 0) {?>
+                                        <td><?php if ($q->role == 0 && $q->jabatan =='Reporter' ) {?>
                                            <a class="btn bg-red waves-effect  waves-float"
                                             href="<?= base_url('welcome/role_aktif/').$q->id_user?> ">Tidak Aktif
                                         </a>
-                                        <?php } else {?>
+                                        <?php }if($q->role == 2 && $q->jabatan =='Reporter') {?>
+                                            <a class="btn bg-blue waves-effect  waves-float"
+                                            href="<?= base_url('welcome/role_tidak_aktif/').$q->id_user?> ">Aktif
+                                        </a>
+                                    <?php }if($q->role == 0 && $q->jabatan =='Editor') {?>
+                                            <a class="btn bg-red waves-effect  waves-float"
+                                            href="<?= base_url('welcome/role_aktif_Editor/').$q->id_user?> ">Tidak Aktif
+                                        </a>
+                                    <?php }if($q->role == 1 && $q->jabatan =='Editor') {?>
                                             <a class="btn bg-blue waves-effect  waves-float"
                                             href="<?= base_url('welcome/role_tidak_aktif/').$q->id_user?> ">Aktif
                                         </a>
@@ -163,7 +174,7 @@
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title" id="largeModalLabel">Tambah Pengguna</h4>
+                                                <h4 class="modal-title" id="largeModalLabel">Edit Pengguna</h4>
                                             </div>
                                             <div class="modal-body">
                                                 <form id="form_validation" action="<?= base_url('welcome/edit_pengguna/').$q->id_user?>" method="POST" enctype="multipart/form-data">
@@ -179,16 +190,16 @@
                                                             <label class="form-label">Nip</label>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group form-float">
+                                                   <div class="form-group form-float">
                                                         <div class="form-line">
-                                                            <input type="text" class="form-control" name="alamat" value="<?= $q->alamat?>"required>
-                                                            <label class="form-label">Alamat</label>
+                                                            <input type="text" class="form-control" name="jabatan" value="<?= $q->jabatan?>"required>
+                                                            <label class="form-label">Jabatan</label>
                                                         </div>
                                                     </div>
                                                     <div class="form-group form-float">
                                                         <div class="form-line">
-                                                            <input type="text" class="form-control" name="jabatan" value="<?= $q->jabatan?>"required>
-                                                            <label class="form-label">Jabatan</label>
+                                                            <input type="text" class="form-control" name="alamat" value="<?= $q->alamat?>"required>
+                                                            <label class="form-label">Alamat</label>
                                                         </div>
                                                     </div>
                                                     <div class="form-group form-float">
