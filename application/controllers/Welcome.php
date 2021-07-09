@@ -39,10 +39,32 @@ class Welcome extends CI_Controller {
 		$data['user'] =  $this->db->get_where('users', ['username' => $this->session->userdata('user')])->row_array();
 		$data['query'] = $this->Model_data->warta_berita();
 		 $data['query1'] =  $this->Model_data->all_laporan_berita1();
+		 $data['query2'] =  $this->Model_data->get_warta_berita();
 		 $this->load->view('template/header');
 		 $this->load->view('template/sidebar',$data);
 		 $this->load->view('warta_berita',$data);
 		 $this->load->view('template/footer');
+	}
+	public function pdf_warta_berita(){
+		/* Create PDF File*/
+      	$this->load->library('pdf');
+			 	$id_user = $this->input->post('id_user');
+                $tanggal = $this->input->post('tanggal');
+
+       $data['query'] = $this->Model_data->pdf_warta_berita($id_user,$tanggal);
+       $data['query1'] =  $this->Model_data->get_warta_berita_by_id($id_user,$tanggal);
+       $this->load->view('print_warta_berita',$data);
+
+        $paper_size='Legal';
+	    $orientation='potrait';
+	    $data_header= array('title' => 'Convert to Pdf');
+	    $html = $this->output->get_output();
+	    $this->pdf->set_paper($paper_size, $orientation, $data_header);
+
+	    $this->pdf->load_html($html);
+	    $this->pdf->render();
+	    $this->pdf->stream('Warta Berita.pdf', array('Attachment' =>0));
+
 	}
 	public function tambah_warta_berita()
 	{

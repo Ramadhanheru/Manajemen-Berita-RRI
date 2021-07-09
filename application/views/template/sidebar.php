@@ -38,12 +38,14 @@
                             <span>Laporan Berita</span>
                         </a>
                     </li>
+                    <?php if($this->session->userdata('id_user') == 1){ ?>
                     <li <?= $this->uri->segment(2) == 'pengguna' ? 'class="active "' : '' ?>>
                         <a href="<?= base_url('welcome/pengguna') ?>">
                             <i class="material-icons">person_pin</i>
                             <span>Pengguna</span>
                         </a>
                     </li>
+                <?php } ?>
                     <li >
                         <a href="<?= base_url('login/logout') ?>">
                             <i class="material-icons">input</i>

@@ -3,6 +3,7 @@
         <div class="block-header">
             <h2>WARTA BERITA</h2>
         </div>
+        <?= $this->session->flashdata('message') ?>
         <!-- Exportable Table -->
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -14,13 +15,38 @@
                     </div>
                     <div  class="body">
                         <?php if ($this->session->userdata('role')==1) {?>
-                        <div style="margin-bottom: 25px;"> <a href="" type="button" class="btn bg-blue waves-effect" data-toggle="modal" data-target="#largeModal">
-                            <i class="material-icons">save</i>
-                            <span>Tambah Warta Berita</span>
-                        </a> </div>
-                        <div style="margin-bottom: 25px;">
-                        </div>
+                        <div class="row">
+                            <div style="margin-bottom: 25px;" class="col-lg-2"> <a href="" type="button" class="btn bg-blue waves-effect" data-toggle="modal" data-target="#largeModal">
+                                <i class="material-icons">save</i>
+                                <span>Tambah Warta Berita</span>
+                            </a> </div>
+                            <form id="form_validation" action="<?= base_url('welcome/pdf_warta_berita') ?>" method="POST" target="_blank">
+                                <div style="margin-bottom: 25px;" class="col-lg-2" style="border-radius: 2px;">
+                                    
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <select name="id_user" class="form-control show-tick" required>
+                                                <?php foreach($query2->result() as $q) { ?>
+                                                <option value="<?= $q->desk_editor; ?>"><?= $q->desk_editor; ?></option>
+                                            <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 25px;" class="col-lg-2" style="border-radius: 2px;">
+                                    <div class="form-group form-float">
+                                        <div class="form-line" >
+                                            <input type="date" class="datepicker form-control" id="tanggal" name="tanggal" placeholder="Tanggal" required="">
+                                            
+                                        </div>
+                                    </div>
 
+                                </div>
+                                <div style="margin-bottom: 25px;" class="col-lg-2" style="border-radius: 2px;">
+                                     <button class="btn btn-lg btn-primary waves-effect" type="submit">SUBMIT</button>
+                                </div>
+                                </form>
+                            </div>
                         <!-- Large Size -->
                         <div class="modal fade" id="largeModal" tabindex="-1" role="dialog">
                             <div class="modal-dialog modal-lg" role="document">
@@ -28,7 +54,6 @@
                                     <div class="modal-header">
                                         <h4 class="modal-title" id="largeModalLabel">Tambah Warta Berita</h4>
                                     </div>
-
                                     <div class="modal-body">
                                         <form id="form_validation" action="<?= base_url('welcome/tambah_warta_berita') ?>" method="POST">
                                             <div class="form-group form-float">
@@ -209,6 +234,58 @@
                                                 <th>Tanggal</th>
                                                 <th>Pukul</th>
                                                 <th>Warta Berita</th>
+                                                <th>Action</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Desk Editor</th>
+                                            <th>Hari</th>
+                                            <th>Tanggal</th>
+                                            <th>Pukul</th>
+                                            <th>Warta Berita</th>
+                                            <th>Action</th>
+                                            
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            
+                                            <?php
+                                            $no=1;
+                                            foreach($query->result() as $q) { ?>
+                                            
+                                            <tr>
+                                                <td><?= $no++ ?></td>
+                                                <td><?= $q->desk_editor ?></td>
+                                                <td><?= $q->hari ?></td>
+                                                <td><?= $q->tanggal ?></td>
+                                                <td><?= $q->pukul ?></td>
+                                                <td>
+                                                    <a href="<?= base_url('pro1/pdf_warta_berita/').$q->desk_editor.'/'.$q->tanggal ?>" target="_blank"><p class="col-teal">Lihat warta berita</p></a>
+                                                </td>
+                                                <td>
+                                                    <a href="<?= base_url('pro1/siarkan_warta_berita/').$q->desk_editor.'/'.$q->tanggal ?>" class="btn btn-info">Siarkan Warta Berita</a>
+                                                    </td>
+                                                
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade in" id="change_password_settings">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Desk Editor</th>
+                                                <th>Hari</th>
+                                                <th>Tanggal</th>
+                                                <th>Pukul</th>
+                                                <th>Warta Berita</th>
                                                 <th>Status</th>
                                                 
                                             </tr>
@@ -229,60 +306,6 @@
                                             
                                             <?php
                                             $no=1;
-                                            foreach($query->result() as $q) { ?>
-                                            
-                                            <tr>
-                                                <td><?= $no++ ?></td>
-                                                <td><?= $q->desk_editor ?></td>
-                                                <td><?= $q->hari ?></td>
-                                                <td><?= $q->tanggal ?></td>
-                                                <td><?= $q->pukul ?></td>
-                                                <td>
-                                                    <?= $q->ringkasan_laporan ?>
-                                                </td>
-                                                <td><?php if ($q->status == 0) { ?>
-                                                    <button class="btn btn-danger">Menunggu disiarkan</button>
-                                                    <?php }else{ ?>
-                                                    <button class="btn btn-success">Telah Disiarkan</button>
-                                                <?php } ?></td>
-                                                
-                                            </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade in" id="change_password_settings">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Desk Editor</th>
-                                                <th>Hari</th>
-                                                <th>Tanggal</th>
-                                                <th>Pukul</th>
-                                                <th>Isi Berita</th>
-                                                <th>Status</th>
-                                                
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Desk Editor</th>
-                                            <th>Hari</th>
-                                            <th>Tanggal</th>
-                                            <th>Pukul</th>
-                                            <th>Isi Berita</th>
-                                            <th>Status</th>
-                                            
-                                        </tr>
-                                        </tfoot>
-                                        <tbody>
-                                            
-                                            <?php
-                                            $no=1;
                                             foreach($query1->result() as $q) { ?>
                                             
                                             <tr>
@@ -292,13 +315,11 @@
                                                 <td><?= $q->tanggal ?></td>
                                                 <td><?= $q->pukul ?></td>
                                                 <td>
-                                                    <?= $q->ringkasan_laporan ?>
+                                                   <a href="<?= base_url('pro1/pdf_warta_berita/').$q->desk_editor.'/'.$q->tanggal ?>" target="_blank"><p class="col-teal">Lihat warta berita</p></a>
                                                 </td>
-                                                <td><?php if ($q->status == 0) { ?>
-                                                    <button class="btn btn-danger">Menunggu disiarkan</button>
-                                                    <?php }else{ ?>
+                                                <td>
                                                     <button class="btn btn-success">Telah Disiarkan</button>
-                                                <?php } ?></td>
+                                                </td>
                                                 
                                             </tr>
                                             <?php } ?>

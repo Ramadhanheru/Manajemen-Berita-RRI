@@ -65,11 +65,16 @@
                                             <a class="btn bg-amber waves-effect  waves-float"
                                                 href="#">Menunggu
                                             </a>
-                                            <?php } else {?>
+                                            <?php } elseif ($q->status == 1) {?>
+
                                             <a class="btn bg-blue waves-effect  waves-float"
                                                 href="#">diproses
                                             </a>
-                                        <?php } ?></td>
+                                        <?php }else{ ?>
+                                            <a class="btn bg-teal waves-effect  waves-float"
+                                                href="#">selesai
+                                            </a>
+                                            <?php } ?></td>
                                         
                                     </tr>
                                     <?php } ?>
