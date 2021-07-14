@@ -29,10 +29,10 @@
                                 <label for="berita" class="col-sm-2 control-label">Berita</label>
                                 <div class="col-sm-10">
                                     <div class="form-line">
-                                        <input type="radio" checked="" value="Warta Daerah" name="gender" id="male" class="with-gap">
-                                        <label for="male">Warta Daerah</label>
-                                        <input type="radio" value="Warta Olahraga" name="gender" id="female" class="with-gap">
-                                        <label for="female" class="m-l-20">Warta Olahraga</label>
+                                        <input type="radio" checked="" value="Warta Berita Daerah" name="gender" id="male" class="with-gap">
+                                        <label for="male">Warta Berita Daerah</label>
+                                        <input type="radio" value="Warta Berita Olahraga" name="gender" id="female" class="with-gap">
+                                        <label for="female" class="m-l-20">Warta Berita Olahraga</label>
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                     <div class="form-line">
                                         <input type="file" class="form-control" id="file_laporan" name="file_laporan" >
                                     </div>
-                                    <p class=" font-italic col-red">*file berupa .mp3</p>
+                                    <p class=" font-italic col-red">*file berupa .mp3 atau .mpeg</p>
                                 </div>
                             </div>
                              <!-- <audio controls>
@@ -68,7 +68,7 @@
                               </audio> -->
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-danger">Update</button>
+                                    <button type="submit" class="btn btn-danger">Submit</button>
                                 </div>
                             </div>
                         </form>

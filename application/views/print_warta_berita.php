@@ -26,7 +26,7 @@
 			</colgroup>
 			<thead>
 				<tr>
-					<th class="tg-28fx" colspan="2"><span style="font-weight:bold">WARTA BERITA DAERAH</span></th>
+					<th class="tg-28fx" colspan="2"><span style="font-weight:bold; "><?= strtoupper($query1['berita']) ?></span></th>
 				</tr>
 			</thead>
 			<tbody>

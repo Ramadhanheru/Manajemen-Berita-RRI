@@ -28,11 +28,23 @@
                                             <select name="id_user" class="form-control show-tick" required>
                                                 <?php foreach($query2->result() as $q) { ?>
                                                 <option value="<?= $q->desk_editor; ?>"><?= $q->desk_editor; ?></option>
-                                            <?php } ?>
+                                                <?php } ?>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
+                                <div style="margin-bottom: 25px;" class="col-lg-2" style="border-radius: 2px;">
+                                    
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <select name="berita" class="form-control show-tick" required>
+                                                <option value="Warta Berita Daerah">Warta Berita Daerah</option>
+                                                <option value="Warta Berita Olahraga">Warta Berita Olahraga</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                 <div style="margin-bottom: 25px;" class="col-lg-2" style="border-radius: 2px;">
                                     <div class="form-group form-float">
                                         <div class="form-line" >
@@ -40,13 +52,12 @@
                                             
                                         </div>
                                     </div>
-
                                 </div>
                                 <div style="margin-bottom: 25px;" class="col-lg-2" style="border-radius: 2px;">
-                                     <button class="btn btn-lg btn-primary waves-effect" type="submit">SUBMIT</button>
+                                    <button class="btn btn-lg btn-primary waves-effect" type="submit">PRINT WARTA BERITA</button>
                                 </div>
-                                </form>
-                            </div>
+                            </form>
+                        </div>
                         <!-- Large Size -->
                         <div class="modal fade" id="largeModal" tabindex="-1" role="dialog">
                             <div class="modal-dialog modal-lg" role="document">
@@ -218,6 +229,7 @@
                     <?php } ?>
                     <?php if ($this->session->userdata('role')==3) {?>
                     <div>
+                        
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation"  class="active"><a href="#profile_settings" aria-controls="settings" role="tab" data-toggle="tab">Menunggu Disiarkan</a></li>
                             <li role="presentation"><a href="#change_password_settings" aria-controls="settings" role="tab" data-toggle="tab">Telah Disiarkan</a></li>
@@ -230,6 +242,7 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Desk Editor</th>
+                                                <th>Berita</th>
                                                 <th>Hari</th>
                                                 <th>Tanggal</th>
                                                 <th>Pukul</th>
@@ -242,6 +255,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Desk Editor</th>
+                                            <th>Berita</th>
                                             <th>Hari</th>
                                             <th>Tanggal</th>
                                             <th>Pukul</th>
@@ -259,15 +273,55 @@
                                             <tr>
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $q->desk_editor ?></td>
+                                                <td><?= $q->berita ?></td>
                                                 <td><?= $q->hari ?></td>
                                                 <td><?= $q->tanggal ?></td>
                                                 <td><?= $q->pukul ?></td>
                                                 <td>
-                                                    <a href="<?= base_url('pro1/pdf_warta_berita/').$q->desk_editor.'/'.$q->tanggal ?>" target="_blank"><p class="col-teal">Lihat warta berita</p></a>
+                                                    <a href="<?= base_url('pro1/pdf_warta_berita/').$q->berita.'/'.$q->desk_editor.'/'.$q->tanggal ?>" target="_blank"><p class="col-teal">Lihat warta berita</p></a>
                                                 </td>
                                                 <td>
-                                                    <a href="<?= base_url('pro1/siarkan_warta_berita/').$q->desk_editor.'/'.$q->tanggal ?>" class="btn btn-info">Siarkan Warta Berita</a>
-                                                    </td>
+                                                    <a href="" data-toggle="modal" data-target="#siarkan_warta_berita-<?=$q->id_warta_berita?>"class="btn btn-info">Siarkan Warta Berita</a>
+                                                </td>
+                                                <!-- Large Size -->
+                                                <div class="modal fade" id="siarkan_warta_berita-<?=$q->id_warta_berita?>" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" id="largeModalLabel">Tambah ke Draft Siaran</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form id="form_validation" name="form1" action="<?= base_url('pro1/siarkan_warta_berita/').$q->desk_editor.'/'.$q->tanggal ?>" method="POST">
+                                                                    
+                                                                    <div class="form-group form-float">
+                                                                        <div class="form-line">
+                                                                            <input type="hidden" name="pukul" value="<?= $q->pukul ?>">
+                                                                            <input type="hidden" name="berita" value="<?= $q->berita ?>">
+                                                                            <input type="text" class="form-control" name="frame"  required>
+                                                                            <label class="form-label">Frame</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group form-float">
+                                                                        <div class="form-line">
+                                                                            <input type="text" class="form-control" name="durasi"  required>
+                                                                            <label class="form-label">Durasi</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group form-float">
+                                                                        <div class="form-line">
+                                                                            <input type="text" class="form-control" name="pembaca_berita" value="<?= $user['nama'] ?>" readonly required>
+                                                                            <label class="form-label">Pembaca Berita</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button class="btn btn-lg btn-primary waves-effect" type="submit">SUBMIT</button>
+                                                                </form>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 
                                             </tr>
                                             <?php } ?>
@@ -276,17 +330,35 @@
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane fade in" id="change_password_settings">
+                                <div class="row">
+                                    <form id="form_validation" action="<?= base_url('pro1/pdf_draft_siaran') ?>" method="POST" target="_blank">
+                                        
+                                        <div style="margin-bottom: 25px;" class="col-lg-2" style="border-radius: 2px;">
+                                            <div class="form-group form-float">
+                                                <div class="form-line" >
+                                                    <input type="date" class="datepicker form-control" id="tanggal" name="tanggal" placeholder="Tanggal" required="">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-bottom: 25px;" class="col-lg-2" style="border-radius: 2px;">
+                                            <button class="btn btn-lg btn-primary waves-effect" type="submit">Print draft siaran</button>
+                                        </div>
+                                    </form>
+                                </div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
                                                 <th>Desk Editor</th>
+                                                <th>Berita</th>
                                                 <th>Hari</th>
                                                 <th>Tanggal</th>
                                                 <th>Pukul</th>
                                                 <th>Warta Berita</th>
                                                 <th>Status</th>
+                                                
                                                 
                                             </tr>
                                         </thead>
@@ -294,11 +366,13 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Desk Editor</th>
+                                            <th>Berita</th>
                                             <th>Hari</th>
                                             <th>Tanggal</th>
                                             <th>Pukul</th>
                                             <th>Warta Berita</th>
                                             <th>Status</th>
+                                            
                                             
                                         </tr>
                                         </tfoot>
@@ -310,16 +384,148 @@
                                             
                                             <tr>
                                                 <td><?= $no++ ?></td>
+                                                <td><?= $q->desk_editor; ?></td>
+                                                <td><?= $q->berita ?></td>
+                                                <td><?= $q->hari ?></td>
+                                                <td><?= $q->tanggal ?></td>
+                                                <td><?= $q->pukul ?></td>
+                                                <td><a href="<?= base_url('pro1/pdf_warta_berita/').$q->berita.'/'.$q->desk_editor.'/'.$q->tanggal ?>" target="_blank"><p class="col-teal">Lihat warta berita</p></a></td>
+                                                <td><button class="btn bg-teal waves-effect  waves-float">Telah Disiarkan </button></td>
+                                                
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?php if ($this->session->userdata('role')==4) {?>
+                    <div>
+                        
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation"  class="active"><a href="#profile_settings" aria-controls="settings" role="tab" data-toggle="tab">Menunggu Disiarkan</a></li>
+                            <li role="presentation"><a href="#change_password_settings" aria-controls="settings" role="tab" data-toggle="tab">Telah Disiarkan</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in  active" id="profile_settings">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Desk Editor</th>
+                                                <th>Berita</th>
+                                                <th>Hari</th>
+                                                <th>Tanggal</th>
+                                                <th>Pukul</th>
+                                                <th>Warta Berita</th>
+                                                <th>Action</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Desk Editor</th>
+                                            <th>Berita</th>
+                                            <th>Hari</th>
+                                            <th>Tanggal</th>
+                                            <th>Pukul</th>
+                                            <th>Warta Berita</th>
+                                            <th>Action</th>
+                                            
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            
+                                            <?php
+                                            $no=1;
+                                            foreach($query->result() as $q) { ?>
+                                            
+                                            <tr>
+                                                <td><?= $no++ ?></td>
                                                 <td><?= $q->desk_editor ?></td>
+                                                <td><?= $q->berita ?></td>
                                                 <td><?= $q->hari ?></td>
                                                 <td><?= $q->tanggal ?></td>
                                                 <td><?= $q->pukul ?></td>
                                                 <td>
-                                                   <a href="<?= base_url('pro1/pdf_warta_berita/').$q->desk_editor.'/'.$q->tanggal ?>" target="_blank"><p class="col-teal">Lihat warta berita</p></a>
+                                                    <a href="<?= base_url('redaksi/pdf_warta_berita/').$q->berita.'/'.$q->desk_editor.'/'.$q->tanggal ?>" target="_blank"><p class="col-teal">Lihat warta berita</p></a>
                                                 </td>
                                                 <td>
-                                                    <button class="btn btn-success">Telah Disiarkan</button>
+                                                    <a href="" class="btn btn-info" style="pointer-events: none; color: #ccc;">Siarkan Warta Berita</a>
                                                 </td>
+                                                
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade in" id="change_password_settings">
+                                <div class="row">
+                                    <form id="form_validation" action="<?= base_url('redaksi/pdf_draft_siaran') ?>" method="POST" target="_blank">
+                                        
+                                        <div style="margin-bottom: 25px;" class="col-lg-2" style="border-radius: 2px;">
+                                            <div class="form-group form-float">
+                                                <div class="form-line" >
+                                                    <input type="date" class="datepicker form-control" id="tanggal" name="tanggal" placeholder="Tanggal" required="">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-bottom: 25px;" class="col-lg-2" style="border-radius: 2px;">
+                                            <button class="btn btn-lg btn-primary waves-effect" type="submit">Print draft siaran</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Desk Editor</th>
+                                                <th>Berita</th>
+                                                <th>Hari</th>
+                                                <th>Tanggal</th>
+                                                <th>Pukul</th>
+                                                <th>Warta Berita</th>
+                                                <th>Status</th>
+                                                
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Desk Editor</th>
+                                            <th>Berita</th>
+                                            <th>Hari</th>
+                                            <th>Tanggal</th>
+                                            <th>Pukul</th>
+                                            <th>Warta Berita</th>
+                                            <th>Status</th>
+                                            
+                                            
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            
+                                            <?php
+                                            $no=1;
+                                            foreach($query1->result() as $q) { ?>
+                                            
+                                            <tr>
+                                                <td><?= $no++ ?></td>
+                                                <td><?= $q->desk_editor; ?></td>
+                                                <td><?= $q->berita ?></td>
+                                                <td><?= $q->hari ?></td>
+                                                <td><?= $q->tanggal ?></td>
+                                                <td><?= $q->pukul ?></td>
+                                                <td><a href="<?= base_url('redaksi/pdf_warta_berita/').$q->berita.'/'.$q->desk_editor.'/'.$q->tanggal ?>" target="_blank"><p class="col-teal">Lihat warta berita</p></a></td>
+                                                <td><button class="btn bg-teal waves-effect  waves-float">Telah Disiarkan </button></td>
                                                 
                                             </tr>
                                             <?php } ?>

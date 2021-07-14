@@ -50,9 +50,10 @@ class Welcome extends CI_Controller {
       	$this->load->library('pdf');
 			 	$id_user = $this->input->post('id_user');
                 $tanggal = $this->input->post('tanggal');
+                $berita = $this->input->post('berita');
 
-       $data['query'] = $this->Model_data->pdf_warta_berita($id_user,$tanggal);
-       $data['query1'] =  $this->Model_data->get_warta_berita_by_id($id_user,$tanggal);
+       $data['query'] = $this->Model_data->pdf_warta_berita($berita,$id_user,$tanggal);
+       $data['query1'] =  $this->Model_data->get_warta_berita_by_id($berita,$id_user,$tanggal);
        $this->load->view('print_warta_berita',$data);
 
         $paper_size='Legal';

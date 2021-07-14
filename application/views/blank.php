@@ -1,4 +1,65 @@
-<section class="content" style="padding: 20px 5px;">
+<?php if ($this->session->userdata('role')==3 || $this->session->userdata('role')==4) { ?>
+   <section class="content" style="padding: 20px 5px;">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>INFO DATA</h2>
+        </div>
+       <!-- Widgets -->
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="info-box bg-teal hover-zoom-effect hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">wifi_tethering</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">Jumlah Warta Berita Daerah yang telah disiarkan</div>
+                        <div class="number count-to" data-from="0" data-to="<?= $total1; ?>" data-speed="2000" data-fresh-interval="20"><?= $total1; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="info-box bg-teal hover-zoom-effect hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">wifi_tethering</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">Jumlah Warta Berita Olahraga yang telah disiarkan</div>
+                        <div class="number count-to" data-from="0" data-to="<?= $total2; ?>" data-speed="2000" data-fresh-interval="20"><?= $total2; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="info-box bg-light-blue hover-zoom-effect hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">equalizer</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">Total Warta Berita</div>
+                        <div class="number count-to" data-from="0" data-to="<?= $total3 ?>" data-speed="2000" data-fresh-interval="20"><?= $total3 ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="info-box bg-cyan hover-zoom-effect  hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">archive</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">Total warta berita masuk</div>
+                        <div class="number count-to" data-from="0" data-to="<?= $total4 ?>
+                        " data-speed="2000" data-fresh-interval="20"><?= $total4 ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php } else { ?>
+  <section class="content" style="padding: 20px 5px;">
     <div class="container-fluid">
         <div class="block-header">
             <h2>DASHBOARD</h2>
@@ -15,20 +76,7 @@
                     </div>
                     <div  class="body">
                         <div class="panel-group" id="accordion_17" role="tablist" aria-multiselectable="true">
-                            <div class="panel panel-col-pink">
-                                <div class="panel-heading" role="tab" id="headingOne_17">
-                                    <h4 class="panel-title">
-                                    <a role="button" data-toggle="collapse" data-parent="#accordion_17" href="#collapseOne_17" aria-expanded="true" aria-controls="collapseOne_17">
-                                        <i class="material-icons">perm_contact_calendar</i> Tentang Aplikasi
-                                    </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseOne_17" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne_17">
-                                    <div class="panel-body">
-                                       <p><strong>Manajemen-Berita RRI</strong> Adalah sebuah aplikasi berbasis website</p>
-                                    </div>
-                                </div>
-                            </div>
+                        
                             <div class="panel panel-col-cyan">
                                 <div class="panel-heading" role="tab" id="headingTwo_17">
                                     <h4 class="panel-title">
@@ -38,7 +86,7 @@
                                     </a>
                                     </h4>
                                 </div>
-                                <div id="collapseTwo_17" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo_17">
+                                <div id="collapseTwo_17" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo_17">
                                     <div class="panel-body">
                                         <ol>
                                             <li>
@@ -143,3 +191,4 @@
         </div>
     </div>
 </section>
+<?php } ?>

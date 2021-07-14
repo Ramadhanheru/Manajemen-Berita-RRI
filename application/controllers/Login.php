@@ -75,6 +75,19 @@ class Login extends CI_Controller {
                    $this->index();
                 }
 					
+				}else if($user['role'] == '4'){
+					if (password_verify($password, $user['password'])) {
+                   
+                   $this->session->set_userdata(array('user'=>$userr,'password'=>$password,'role' => $user['role'],'id_user'=>$user['id_user']));
+					$this->session->set_flashdata('message','<div class ="alert alert-success" roles="alert"><h6>Welcome '.$userr.' ! <span>Anda Masuk Sebagai Ketua Redaksi</span></h6></div>');
+					redirect('Redaksi');
+
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"><h6>
+                    Salah Password!</h6></div>');
+                   $this->index();
+                }
+					
 				}else if($user['role'] == '0'){
 					$this->session->set_flashdata('message','<div class ="alert alert-danger" roles="alert"><h6> Akun Anda sedang di Non-aktifkan !</h6> </div>');
 					$this->index();

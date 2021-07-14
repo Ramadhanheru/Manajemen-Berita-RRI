@@ -106,7 +106,7 @@ class Reporter extends CI_Controller {
 
 	public function uploadlaporan(){
 		 //$config['file_name'] = '';
-        $config['allowed_types'] = 'mp3';
+        $config['allowed_types'] = '*';
         $config['max_size']      = 0;
         $config['upload_path']   = FCPATH .'./uploadfile/';
 
@@ -120,7 +120,7 @@ class Reporter extends CI_Controller {
 	}
 	public function uploadlaporantext(){
 		 //$config['file_name'] = '';
-        $config['allowed_types'] = 'doc|docx|pdf';
+        $config['allowed_types'] = 'doc|docx|pdf|mpeg';
         $config['max_size']      = 0;
         $config['upload_path']   = FCPATH .'./uploadfile/';
 

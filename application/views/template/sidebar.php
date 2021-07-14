@@ -97,12 +97,36 @@
                      <li <?= $this->uri->segment(2) == '' ||
                             $this->uri->segment(2) == 'profile' ? 'class="active "' : '' ?>>
                         <a href="<?= base_url('pro1') ?>">
-                            <i class="material-icons">home</i>
-                            <span>Dashboard</span>
+                            <i class="material-icons">equalizer</i>
+                            <span>Info Data </span>
                         </a>
                     </li>
                      <li <?= $this->uri->segment(2) == 'warta_berita' ? 'class="active "' : '' ?>>
                         <a href="<?= base_url('pro1/warta_berita') ?>">
+                            <i class="material-icons">wifi_tethering</i>
+                            <span>Warta Berita</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="<?= base_url('login/logout') ?>">
+                            <i class="material-icons">home</i>
+                            <span>Log Out</span>
+                        </a>
+                    </li>  
+                </ul>
+            <?php } ?>
+             <?php if($this->session->userdata('role') == 4){ ?>
+                 <ul class="list"> 
+                    <li class="header">MENU</li>
+                     <li <?= $this->uri->segment(2) == '' ||
+                            $this->uri->segment(2) == 'profile' ? 'class="active "' : '' ?>>
+                        <a href="<?= base_url('redaksi') ?>">
+                            <i class="material-icons">equalizer</i>
+                            <span>Info Data </span>
+                        </a>
+                    </li>
+                     <li <?= $this->uri->segment(2) == 'warta_berita' ? 'class="active "' : '' ?>>
+                        <a href="<?= base_url('redaksi/warta_berita') ?>">
                             <i class="material-icons">wifi_tethering</i>
                             <span>Warta Berita</span>
                         </a>
