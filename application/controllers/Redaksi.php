@@ -53,6 +53,7 @@ class Redaksi extends CI_Controller {
 		/* Create PDF File*/
       	$this->load->library('pdf');
       	$berita = urldecode($this->uri->segment(3));
+      	$desk_editor = urldecode($this->uri->segment(4));
 
        $data['query'] = $this->Model_data->pdf_warta_berita($berita,$desk_editor,$tanggal);
        $data['query1'] =  $this->Model_data->get_warta_berita_by_id($berita,$desk_editor,$tanggal);
