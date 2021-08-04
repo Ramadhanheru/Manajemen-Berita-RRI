@@ -29,13 +29,11 @@
     <div class="login-box">
         <div class="logo">
             <img width="100%" height="100%" src="<?= base_url('uploadfile/') ?>logo.png">
-            <small>Admin BootStrap Based - Material Design</small>
         </div>
         <div class="card">
             <div class="body">
                 <?= $this->session->flashdata('message'); ?>
                 <form id="sign_in" action="<?= base_url('login/loginn'); ?>" method="POST">
-                    <div class="msg">Sign in to start your session</div>
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
